@@ -4,8 +4,6 @@ extends RefCounted
 ## Calcula los puntos de la trayectoria matemática f(x) con longitud de arco fija
 ## y reflexión tipo valor absoluto en paredes y bordes.
 
-const MathEvaluator = preload("res://scripts/math_evaluator.gd")
-
 const DEFAULT_ARC_LENGTH: float = 550.0 # Longitud de arco total fija en píxeles
 const DEFAULT_UNIT_SCALE: float = 60.0  # Píxeles por unidad matemática
 

@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/nivel_base.gd" id="1_nivel"]
+[ext_resource type="PackedScene" path="res://scenes/elementos/hoyo.tscn" id="2_hoyo"]
+[ext_resource type="PackedScene" path="res://scenes/elementos/obstaculo.tscn" id="3_obs"]
+
+[node name="Nivel2" type="Node2D" node_paths=PackedStringArray("posicion_inicio", "hoyo", "contenedor_obstaculos")]
+script = ExtResource("1_nivel")
+titulo = "Hoyo 2: Slalom Sinusoidal"
+descripcion = "¡Muros escalonados! Una recta o diagonal chocará; solo sin(x) oscila entre las aperturas."
+ecuacion_sugerida = "sin(x)"
+sweet_spot_centro = 0.83
+posicion_inicio = NodePath("PosicionInicio")
+hoyo = NodePath("Hoyo")
+contenedor_obstaculos = NodePath("Obstaculos")
+
+[node name="PosicionInicio" type="Marker2D" parent="."]
+position = Vector2(160, 300)
+
+[node name="Hoyo" parent="." instance=ExtResource("2_hoyo")]
+position = Vector2(537, 300)
+
+[node name="Obstaculos" type="Node2D" parent="."]
+
+[node name="Obstaculo1" parent="Obstaculos" instance=ExtResource("3_obs")]
+position = Vector2(254, 322.5)
+rect_size = Vector2(28, 95)
+
+[node name="Obstaculo2" parent="Obstaculos" instance=ExtResource("3_obs")]
+position = Vector2(254, 147.5)
+rect_size = Vector2(28, 105)
+
+[node name="Obstaculo3" parent="Obstaculos" instance=ExtResource("3_obs")]
+position = Vector2(443, 272.5)
+rect_size = Vector2(28, 95)
+
+[node name="Obstaculo4" parent="Obstaculos" instance=ExtResource("3_obs")]
+position = Vector2(443, 450)
+rect_size = Vector2(28, 110)
+

@@ -1,0 +1,271 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/interfaz_usuario.gd" id="1_ui"]
+[ext_resource type="Script" path="res://scripts/power_meter.gd" id="2_power"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_top"]
+bg_color = Color(0.09, 0.11, 0.14, 0.92)
+border_width_bottom = 2
+border_color = Color(0.2, 0.25, 0.3, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.1, 0.12, 0.16, 0.95)
+border_width_top = 2
+border_color = Color(0.2, 0.25, 0.32, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner"]
+bg_color = Color(0.08, 0.18, 0.12, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.25, 0.85, 0.45, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="InterfazUsuario" type="CanvasLayer" node_paths=PackedStringArray("campo_formula", "etiqueta_estado", "etiqueta_titulo", "etiqueta_descripcion", "etiqueta_golpes", "medidor_potencia", "boton_disparar", "contenedor_botones_rapidos", "boton_anterior", "boton_reiniciar", "boton_siguiente", "banner_victoria", "etiqueta_victoria", "boton_victoria_siguiente")]
+script = ExtResource("1_ui")
+campo_formula = NodePath("BottomPanel/Margin/HBox/LeftControls/InputRow/FormulaInput")
+etiqueta_estado = NodePath("BottomPanel/Margin/HBox/LeftControls/StatusLabel")
+etiqueta_titulo = NodePath("TopBar/Margin/HBox/HoleInfo/HoyoTitleLabel")
+etiqueta_descripcion = NodePath("TopBar/Margin/HBox/HoleInfo/HoyoDescLabel")
+etiqueta_golpes = NodePath("TopBar/Margin/HBox/StrokesLabel")
+medidor_potencia = NodePath("BottomPanel/Margin/HBox/RightControls/PowerMeter")
+boton_disparar = NodePath("BottomPanel/Margin/HBox/RightControls/ShootButton")
+contenedor_botones_rapidos = NodePath("BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow/QuickButtons")
+boton_anterior = NodePath("TopBar/Margin/HBox/NavButtons/PrevHoleButton")
+boton_reiniciar = NodePath("TopBar/Margin/HBox/NavButtons/ResetHoleButton")
+boton_siguiente = NodePath("TopBar/Margin/HBox/NavButtons/NextHoleButton")
+banner_victoria = NodePath("VictoryBanner")
+etiqueta_victoria = NodePath("VictoryBanner/Margin/VBox/VictoryLabel")
+boton_victoria_siguiente = NodePath("VictoryBanner/Margin/VBox/VictoryNextButton")
+
+[node name="TopBar" type="PanelContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 62.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_top")
+
+[node name="Margin" type="MarginContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="TopBar/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HoleInfo" type="VBoxContainer" parent="TopBar/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HoyoTitleLabel" type="Label" parent="TopBar/Margin/HBox/HoleInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Hoyo 1: Recta Plana"
+
+[node name="HoyoDescLabel" type="Label" parent="TopBar/Margin/HBox/HoleInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.82, 1)
+theme_override_font_sizes/font_size = 12
+text = "Usa y = 0 y calcula la potencia exacta para embocar."
+
+[node name="StrokesLabel" type="Label" parent="TopBar/Margin/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Golpes: 0 | Par: 1"
+
+[node name="NavButtons" type="HBoxContainer" parent="TopBar/Margin/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PrevHoleButton" type="Button" parent="TopBar/Margin/HBox/NavButtons"]
+custom_minimum_size = Vector2(80, 34)
+layout_mode = 2
+text = "◀ Anterior"
+
+[node name="ResetHoleButton" type="Button" parent="TopBar/Margin/HBox/NavButtons"]
+custom_minimum_size = Vector2(80, 34)
+layout_mode = 2
+text = "⟳ Reiniciar"
+
+[node name="NextHoleButton" type="Button" parent="TopBar/Margin/HBox/NavButtons"]
+custom_minimum_size = Vector2(80, 34)
+layout_mode = 2
+text = "Siguiente ▶"
+
+[node name="BottomPanel" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -140.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Margin" type="MarginContainer" parent="BottomPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="BottomPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="LeftControls" type="VBoxContainer" parent="BottomPanel/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="InputRow" type="HBoxContainer" parent="BottomPanel/Margin/HBox/LeftControls"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PrefixLabel" type="Label" parent="BottomPanel/Margin/HBox/LeftControls/InputRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "f(x) ="
+
+[node name="FormulaInput" type="LineEdit" parent="BottomPanel/Margin/HBox/LeftControls/InputRow"]
+custom_minimum_size = Vector2(300, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+placeholder_text = "Escribe f(x), ej: sin(x), 0, x, 0.7*x..."
+
+[node name="StatusLabel" type="Label" parent="BottomPanel/Margin/HBox/LeftControls"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.95, 0.45, 1)
+theme_override_font_sizes/font_size = 13
+text = "✔ Ecuación válida: f(0) = 0"
+
+[node name="QuickButtonsRow" type="HBoxContainer" parent="BottomPanel/Margin/HBox/LeftControls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="QuickLabel" type="Label" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.7, 0.78, 1)
+theme_override_font_sizes/font_size = 12
+text = "Fórmulas rápidas:"
+
+[node name="QuickButtons" type="HBoxContainer" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Btn0" type="Button" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow/QuickButtons"]
+custom_minimum_size = Vector2(50, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0"
+metadata/formula = "0"
+
+[node name="BtnX" type="Button" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow/QuickButtons"]
+custom_minimum_size = Vector2(50, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "x"
+metadata/formula = "x"
+
+[node name="BtnSin" type="Button" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow/QuickButtons"]
+custom_minimum_size = Vector2(65, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "sin(x)"
+metadata/formula = "sin(x)"
+
+[node name="BtnSlope" type="Button" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow/QuickButtons"]
+custom_minimum_size = Vector2(65, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0.7*x"
+metadata/formula = "0.7*x"
+
+[node name="BtnCos" type="Button" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow/QuickButtons"]
+custom_minimum_size = Vector2(75, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "cos(x)-1"
+metadata/formula = "cos(x)-1"
+
+[node name="BtnNegX" type="Button" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow/QuickButtons"]
+custom_minimum_size = Vector2(50, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "-x"
+metadata/formula = "-x"
+
+[node name="BtnHalfX" type="Button" parent="BottomPanel/Margin/HBox/LeftControls/QuickButtonsRow/QuickButtons"]
+custom_minimum_size = Vector2(55, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0.5*x"
+metadata/formula = "0.5*x"
+
+[node name="Separator" type="VSeparator" parent="BottomPanel/Margin/HBox"]
+layout_mode = 2
+
+[node name="RightControls" type="HBoxContainer" parent="BottomPanel/Margin/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PowerMeter" type="Control" parent="BottomPanel/Margin/HBox/RightControls"]
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+script = ExtResource("2_power")
+
+[node name="ShootButton" type="Button" parent="BottomPanel/Margin/HBox/RightControls"]
+custom_minimum_size = Vector2(140, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "DISPARAR
+(ESPACIO)"
+
+[node name="VictoryBanner" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -70.0
+offset_right = 180.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
+
+[node name="Margin" type="MarginContainer" parent="VictoryBanner"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="VictoryBanner/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="VictoryLabel" type="Label" parent="VictoryBanner/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "¡HOLE IN ONE!"
+horizontal_alignment = 1
+
+[node name="VictoryNextButton" type="Button" parent="VictoryBanner/Margin/VBox"]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Siguiente Hoyo ▶"
+

@@ -8,6 +8,7 @@ func _ready() -> void:
 	test_evaluator()
 	test_trajectory_fixed_length()
 	test_levels_logic()
+	test_packed_level_scenes()
 	print("--- TODOS LOS TESTS PASARON CON ÉXITO ---")
 	get_tree().quit(0)
 
@@ -139,3 +140,36 @@ func test_levels_logic() -> void:
 	assert(found_near_hole, "Hoyo 3: El rebote de x debe alcanzar el hoyo")
 	
 	print("  ✔ Lógica de los 3 Hoyos (Llano, Slalom con sin(x), Rebote con |f(x)|) verificada al 100%")
+
+func test_packed_level_scenes() -> void:
+	print("[TEST] Instanciación modular de escenas de nivel...")
+	var n1_scene: PackedScene = load("res://scenes/niveles/nivel_1.tscn")
+	var n2_scene: PackedScene = load("res://scenes/niveles/nivel_2.tscn")
+	var n3_scene: PackedScene = load("res://scenes/niveles/nivel_3.tscn")
+	
+	assert(n1_scene != null, "nivel_1.tscn debe cargar")
+	assert(n2_scene != null, "nivel_2.tscn debe cargar")
+	assert(n3_scene != null, "nivel_3.tscn debe cargar")
+	
+	var n1 = n1_scene.instantiate()
+	add_child(n1)
+	assert(n1.get_start_position() == Vector2(220, 300), "Nivel 1 start pos incorrecto")
+	assert(n1.get_hole_position() == Vector2(660, 300), "Nivel 1 hole pos incorrecto")
+	assert(n1.get_obstacles_rects().size() == 0, "Nivel 1 no debe tener obstáculos")
+	n1.queue_free()
+	
+	var n2 = n2_scene.instantiate()
+	add_child(n2)
+	assert(n2.get_start_position() == Vector2(160, 300), "Nivel 2 start pos incorrecto")
+	assert(n2.get_hole_position() == Vector2(537, 300), "Nivel 2 hole pos incorrecto")
+	assert(n2.get_obstacles_rects().size() == 4, "Nivel 2 debe tener 4 obstáculos")
+	n2.queue_free()
+	
+	var n3 = n3_scene.instantiate()
+	add_child(n3)
+	assert(n3.get_start_position() == Vector2(200, 300), "Nivel 3 start pos incorrecto")
+	assert(n3.get_hole_position() == Vector2(510, 300), "Nivel 3 hole pos incorrecto")
+	assert(n3.get_obstacles_rects().size() == 1, "Nivel 3 debe tener 1 obstáculo central")
+	n3.queue_free()
+	
+	print("  ✔ Escenas modulares de niveles (Nivel 1, 2, 3) instanciadas y validadas con éxito")

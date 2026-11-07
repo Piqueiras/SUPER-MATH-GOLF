@@ -9,10 +9,12 @@ var _parsed_formula: String = ""
 var _is_valid: bool = false
 var _error_message: String = ""
 
-# Constantes matemáticas disponibles
-const PI_VAL: float = PI
-const TAU_VAL: float = TAU
-const E_VAL: float = 2.718281828459045
+# Constantes matemáticas accesibles directamente en la expresión
+var e: float = 2.718281828459045
+var E: float = 2.718281828459045
+var pi: float = PI
+var PI_CONST: float = PI
+var tau: float = TAU
 
 func parse_formula(raw_input: String) -> Dictionary:
 	_raw_formula = raw_input.strip_edges()
