@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="holeDepth" cx="50%" cy="52%" r="48%">
+      <stop offset="0%" stop-color="#020402"/>
+      <stop offset="65%" stop-color="#090d09"/>
+      <stop offset="88%" stop-color="#141a14"/>
+      <stop offset="100%" stop-color="#243324"/>
+    </radialGradient>
+    <radialGradient id="grassLip" cx="50%" cy="50%" r="50%">
+      <stop offset="75%" stop-color="#1a3b1a" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#1a3b1a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Sombra suave del borde del hoyo sobre el césped -->
+  <circle cx="32" cy="32" r="30" fill="url(#grassLip)"/>
+  <!-- Cazoleta interior (oscura con profundidad) -->
+  <circle cx="32" cy="32" r="23" fill="url(#holeDepth)"/>
+  <!-- Borde interior metálico de la cazoleta -->
+  <circle cx="32" cy="32" r="22.5" fill="none" stroke="#334155" stroke-width="1.2" opacity="0.6"/>
+  <!-- Fondo más oscuro de la cazoleta -->
+  <circle cx="32" cy="33" r="14" fill="#010301"/>
+</svg>
+

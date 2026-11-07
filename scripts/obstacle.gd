@@ -1,32 +1,60 @@
+@tool
 class_name GolfObstacle
-extends Node2D
+extends StaticBody2D
 
-## Bloque obstáculo o barrera en el campo de minigolf
+## Bloque obstáculo con nodos visuales (Sombra, Cuerpo, Bisel) y CollisionShape2D real
 
-@export var rect_size: Vector2 = Vector2(40, 100)
-@export var fill_color: Color = Color(0.48, 0.28, 0.16)
+@export var rect_size: Vector2 = Vector2(40, 100):
+	set(val):
+		rect_size = val
+		_actualizar_geometria()
+
+@export var fill_color: Color = Color(0.48, 0.28, 0.16):
+	set(val):
+		fill_color = val
+		if cuerpo != null:
+			cuerpo.color = fill_color
+
 @export var border_color: Color = Color(0.30, 0.15, 0.08)
 
+@export_group("Referencias de Nodos")
+@export var cuerpo: ColorRect
+@export var sombra: ColorRect
+@export var borde: Line2D
+@export var collision_shape: CollisionShape2D
+
 func _ready() -> void:
-	queue_redraw()
+	_actualizar_geometria()
 
 func get_rect2() -> Rect2:
 	return Rect2(global_position - rect_size * 0.5, rect_size)
 
-func _draw() -> void:
+func _actualizar_geometria() -> void:
 	var half = rect_size * 0.5
-	var local_rect = Rect2(-half, rect_size)
 	
-	# Sombra
-	draw_rect(Rect2(-half + Vector2(3, 4), rect_size), Color(0, 0, 0, 0.3), true)
+	if cuerpo != null:
+		cuerpo.position = -half
+		cuerpo.size = rect_size
+		cuerpo.color = fill_color
 	
-	# Cuerpo principal
-	draw_rect(local_rect, fill_color, true)
+	if sombra != null:
+		sombra.position = -half + Vector2(3, 4)
+		sombra.size = rect_size
 	
-	# Borde biselado
-	draw_rect(local_rect, border_color, false, 3.0)
+	if borde != null:
+		borde.points = PackedVector2Array([
+			-half,
+			Vector2(half.x, -half.y),
+			half,
+			Vector2(-half.x, half.y),
+			-half
+		])
+		borde.default_color = border_color
 	
-	# Detalle interior (estilo bloque de madera o franjas de minigolf)
-	draw_line(Vector2(-half.x + 4, -half.y + 4), Vector2(half.x - 4, -half.y + 4), Color(1, 1, 1, 0.25), 1.5)
-	draw_line(Vector2(-half.x + 4, half.y - 4), Vector2(half.x - 4, half.y - 4), Color(0, 0, 0, 0.35), 1.5)
-
+	if collision_shape != null:
+		if collision_shape.shape is RectangleShape2D:
+			collision_shape.shape.size = rect_size
+		else:
+			var rect_shape = RectangleShape2D.new()
+			rect_shape.size = rect_size
+			collision_shape.shape = rect_shape

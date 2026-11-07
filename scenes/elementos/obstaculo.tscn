@@ -1,7 +1,35 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_obstacle"]
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_obs"]
 
-[node name="Obstaculo" type="Node2D" groups=["obstaculos"]]
-script = ExtResource("1_obstacle")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obs"]
+size = Vector2(40, 100)
 
+[node name="Obstaculo" type="StaticBody2D" node_paths=PackedStringArray("cuerpo", "sombra", "borde", "collision_shape") groups=["obstaculos"]]
+script = ExtResource("1_obs")
+cuerpo = NodePath("Cuerpo")
+sombra = NodePath("Sombra")
+borde = NodePath("Borde")
+collision_shape = NodePath("CollisionShape2D")
+
+[node name="Sombra" type="ColorRect" parent="."]
+offset_left = -17.0
+offset_top = -46.0
+offset_right = 23.0
+offset_bottom = 54.0
+color = Color(0, 0, 0, 0.3)
+
+[node name="Cuerpo" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -50.0
+offset_right = 20.0
+offset_bottom = 50.0
+color = Color(0.48, 0.28, 0.16, 1)
+
+[node name="Borde" type="Line2D" parent="."]
+points = PackedVector2Array(-20, -50, 20, -50, 20, 50, -20, 50, -20, -50)
+width = 2.5
+default_color = Color(0.3, 0.15, 0.08, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_obs")

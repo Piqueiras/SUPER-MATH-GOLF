@@ -1,7 +1,37 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://dcec7rtpfpdvh"]
 
-[ext_resource type="Script" path="res://scripts/hole.gd" id="1_hole"]
+[ext_resource type="Script" uid="uid://df5gle1qbsuk4" path="res://scripts/hole.gd" id="1_hole"]
+[ext_resource type="Texture2D" uid="uid://b7qqokahpok4c" path="res://assets/hole.svg" id="2_hole_tex"]
 
-[node name="Hoyo" type="Node2D" groups=["hoyos"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_hole"]
+radius = 34.0
+
+[node name="Hoyo" type="Area2D" unique_id=249657917 node_paths=PackedStringArray("cazoleta", "mastil", "bandera", "collision_shape") groups=["hoyos"]]
 script = ExtResource("1_hole")
+cazoleta = NodePath("Cazoleta")
+mastil = NodePath("BanderaPivot/Mastil")
+bandera = NodePath("BanderaPivot/Bandera")
+collision_shape = NodePath("CollisionShape2D")
 
+[node name="Cazoleta" type="Sprite2D" parent="." unique_id=897095477]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_hole_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1526942643]
+shape = SubResource("CircleShape2D_hole")
+
+[node name="BanderaPivot" type="Node2D" parent="." unique_id=1609689970]
+
+[node name="Mastil" type="Line2D" parent="BanderaPivot" unique_id=1120641559]
+points = PackedVector2Array(0, 0, 0, -46)
+width = 2.5
+default_color = Color(0.9, 0.92, 0.95, 1)
+
+[node name="PuntaDorada" type="Line2D" parent="BanderaPivot" unique_id=1258272605]
+points = PackedVector2Array(0, -46, 0, -48)
+width = 4.0
+default_color = Color(1, 0.8, 0.2, 1)
+
+[node name="Bandera" type="Polygon2D" parent="BanderaPivot" unique_id=624540888]
+color = Color(0.95, 0.2, 0.18, 1)
+polygon = PackedVector2Array(0, -46, 0, -28, 24, -36)

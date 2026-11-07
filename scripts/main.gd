@@ -33,6 +33,7 @@ func _ready() -> void:
 	
 	if interfaz != null:
 		interfaz.formula_cambiada.connect(_on_formula_cambiada)
+		interfaz.potencia_actualizada.connect(_on_potencia_actualizada)
 		interfaz.disparo_soltado.connect(_on_disparo_soltado)
 		interfaz.solicitar_reiniciar.connect(_reiniciar_nivel)
 		interfaz.solicitar_siguiente_hoyo.connect(_siguiente_nivel)
@@ -159,7 +160,23 @@ func _recalcular_trayectoria() -> void:
 			_trayectoria_actual.points,
 			_evaluador.is_valid(),
 			_trayectoria_actual.hit_obstacle,
-			_trayectoria_actual.collision_points
+			_trayectoria_actual.collision_points,
+			_calc_trayectoria.total_arc_length
+		)
+		visualizador.set_power_preview(
+			0.0,
+			false,
+			_nivel_instanciado.sweet_spot_centro,
+			_nivel_instanciado.sweet_spot_ancho
+		)
+
+func _on_potencia_actualizada(potencia: float, cargando: bool) -> void:
+	if visualizador != null and _nivel_instanciado != null:
+		visualizador.set_power_preview(
+			potencia,
+			cargando,
+			_nivel_instanciado.sweet_spot_centro,
+			_nivel_instanciado.sweet_spot_ancho
 		)
 
 # ==========================================
@@ -175,6 +192,14 @@ func _on_disparo_soltado(potencia: float, es_sweet_spot: bool) -> void:
 	
 	_esta_disparando = true
 	_golpes += 1
+	
+	if visualizador != null and _nivel_instanciado != null:
+		visualizador.set_power_preview(
+			0.0,
+			false,
+			_nivel_instanciado.sweet_spot_centro,
+			_nivel_instanciado.sweet_spot_ancho
+		)
 	
 	if interfaz != null:
 		interfaz.bloquear_controles(true)

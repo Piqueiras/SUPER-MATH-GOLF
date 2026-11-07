@@ -6,6 +6,7 @@ extends CanvasLayer
 signal formula_cambiada(nueva_formula: String)
 signal disparo_iniciado
 signal disparo_soltado(potencia: float, es_sweet_spot: bool)
+signal potencia_actualizada(potencia: float, cargando: bool)
 signal solicitar_reiniciar
 signal solicitar_siguiente_hoyo
 signal solicitar_anterior_hoyo
@@ -42,6 +43,9 @@ func _ready() -> void:
 		boton_disparar.button_down.connect(_on_shoot_down)
 		boton_disparar.button_up.connect(_on_shoot_up)
 	if medidor_potencia != null:
+		medidor_potencia.power_changed.connect(func(p):
+			potencia_actualizada.emit(p, medidor_potencia.is_charging)
+		)
 		medidor_potencia.shot_released.connect(_on_power_meter_released)
 	if boton_reiniciar != null:
 		boton_reiniciar.pressed.connect(func(): solicitar_reiniciar.emit())

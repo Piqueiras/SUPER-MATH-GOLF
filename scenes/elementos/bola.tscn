@@ -1,7 +1,38 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://dcryvfnbc8ic0"]
 
-[ext_resource type="Script" path="res://scripts/ball.gd" id="1_ball"]
+[ext_resource type="Script" uid="uid://ny4wpqrybqfk" path="res://scripts/ball.gd" id="1_ball"]
+[ext_resource type="Texture2D" uid="uid://bxorkdj1d4rnw" path="res://assets/ball_shadow.svg" id="2_shadow"]
+[ext_resource type="Texture2D" uid="uid://h2p4pqb5phbp" path="res://assets/ball.svg" id="3_ball"]
 
-[node name="Bola" type="Node2D" groups=["bolas"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ball"]
+
+[node name="Bola" type="CharacterBody2D" unique_id=1512415350 node_paths=PackedStringArray("sprite_bola", "sombra_bola", "particulas_estela", "shape_colision") groups=["bolas"]]
 script = ExtResource("1_ball")
+sprite_bola = NodePath("SpriteBola")
+sombra_bola = NodePath("Sombra")
+particulas_estela = NodePath("Estela")
+shape_colision = NodePath("CollisionShape2D")
 
+[node name="Sombra" type="Sprite2D" parent="." unique_id=1720183550]
+position = Vector2(1.5, 3.5)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_shadow")
+
+[node name="Estela" type="CPUParticles2D" parent="." unique_id=1585618015]
+emitting = false
+amount = 16
+lifetime = 0.35
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 15.0
+scale_amount_min = 1.5
+scale_amount_max = 3.0
+color = Color(0.9, 0.95, 1, 0.5)
+
+[node name="SpriteBola" type="Sprite2D" parent="." unique_id=1321028222]
+scale = Vector2(0.625, 0.625)
+texture = ExtResource("3_ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1817098217]
+shape = SubResource("CircleShape2D_ball")
